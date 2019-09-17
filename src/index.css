@@ -40,14 +40,21 @@ ol, ul {
   background: #ddd;
 }
 
-/* .game {
-  display: flex;
-  flex-direction: row;
-} */
+.game {
+  text-align: center;
+}
 
-/* .game-info {
-  margin-left: 20px;
-} */
+
+.game-board {
+  width: 165px;
+  margin: 0 auto;
+
+}
+
+.game-info {
+  width: 250px;
+  margin: 0 auto;
+}
 
 .highlight {
   text-decoration: underline;
