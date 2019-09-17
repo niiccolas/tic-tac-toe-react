@@ -62,6 +62,7 @@ class Game extends React.Component {
       }],
       xIsNext: true,
       stepNumber: 0,
+      descendingMoves: true,
     }
   }
 
@@ -78,11 +79,10 @@ class Game extends React.Component {
       return (
         <li key={move}>
             <button onClick={() => this.jumpTo(move)} className={
-              move === this.state.stepNumber ? 'highlight' : ''
+              move === this.state.stepNumber ? 'btn-moves highlight' : 'btn-moves'
             }>
               {btnLabel}
             </button>
-
         </li>
       );
     });
@@ -104,10 +104,20 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <h1>{status}</h1>
-          <ol>{moves}</ol>
+          <button onClick={() => this.sortHistory()} className="btn-menu">
+            Sort moves {this.state.descendingMoves ? "⬇" : "⬆" }
+          </button>
+
+          <ul>{this.state.descendingMoves ? moves : moves.reverse()}</ul>
         </div>
       </div>
     );
+  }
+
+  sortHistory() {
+    this.setState({
+      descendingMoves: !this.state.descendingMoves
+    });
   }
 
   handleClick(i) {
