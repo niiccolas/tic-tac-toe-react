@@ -68,6 +68,14 @@ class Game extends React.Component {
     }
   }
 
+  displayStatus() {
+    if (this.state.stepNumber > 8) {
+      return "It's a draw 🤷‍♀️"
+    } else {
+      return 'Next player: ' + (this.state.xIsNext ? '🔮' : '💩');
+    }
+  }
+
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
@@ -76,7 +84,7 @@ class Game extends React.Component {
     const moves = history.map((_step, move) => {
       const btnLabel =  move ?
       `Move n°${move}: [${history[move].location}]` :
-      'Game start';
+      'Game start ↩︎';
 
       return (
         <li key={move}>
@@ -95,7 +103,7 @@ class Game extends React.Component {
       status = 'Winner: ' + winner.winningPlayer;
       winningSquares = winner.winningSquares;
     } else {
-      status = 'Next player: ' + (this.state.xIsNext ? '🔮' : '💩');
+      status = this.displayStatus();
     }
 
     return (
@@ -109,11 +117,11 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <h1>{status}</h1>
+
+          <ul>{this.state.descendingMoves ? moves : moves.reverse()}</ul>
           <button onClick={() => this.sortHistory()} className="btn-menu">
             Sort moves {this.state.descendingMoves ? "⬇" : "⬆" }
           </button>
-
-          <ul>{this.state.descendingMoves ? moves : moves.reverse()}</ul>
         </div>
       </div>
     );
