@@ -14,41 +14,31 @@ function Square(props) {
 }
 
 class Board extends React.Component {
-  renderSquare(i) {
-    return (
-      <Square
-        key={"square_" + i}
-        value={this.props.squares[i]}
-        onClick={() => this.props.onClick(i)}
-        isHighlighted={this.props.winningSquares.includes(i)}
-      />
-    );
-  }
-
   render() {
-    // Generate array of 3 squares
-    const render = []
-    let   tmpArr = []
+    const nRows    = 3;
+    const nSquares = 3;
 
-    for (let i = 0; i < 9; i++) {
-      tmpArr.push(this.renderSquare(i))
-
-      if (tmpArr.length === 3) {
-        render.push(tmpArr);
-        tmpArr = [];
-      }
-    }
-
-    // Generate 3 rows
     return (
       <div>
-        {render.map((el, i) => {
-          return (
-            <div className="board-row" key={"row_" + i}>
-              {el}
+        {
+          // Generate rows
+          [...Array(nRows).keys()].map((row_idx)=> (
+            <div className="board-row" key={"row_" + row_idx}>
+              {
+                // Generate squares
+                // using a vanilla JS array range generator contraption
+                [...Array(nSquares).keys()].map(i => i + (row_idx * nSquares)).map((sqr_idx)=> (
+                  <Square
+                    key={"square_" + sqr_idx}
+                    value={this.props.squares[sqr_idx]}
+                    onClick={() => this.props.onClick(sqr_idx)}
+                    isHighlighted={this.props.winningSquares.includes (sqr_idx)}
+                  />
+                ))
+              }
             </div>
-          );
-        })}
+          ))
+        }
       </div>
     );
   }
